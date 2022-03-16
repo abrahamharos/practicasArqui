@@ -10,7 +10,7 @@ package com.abrahamharos.practicauno;
  */
 public class Main {
     public static void main (String args[]) {
-        String number = "123";
+        String number = "5726";
         FromArabicToCardinalConverter converter = new FromArabicToCardinalConverter();
         
         String cardinal = converter.convert(number);
