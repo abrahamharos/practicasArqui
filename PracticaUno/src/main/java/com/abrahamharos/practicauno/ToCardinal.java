@@ -56,25 +56,33 @@ public class ToCardinal implements To {
                 switch(number.length() - index) {
                     case 1:
                         currentArabicNumber = obj.getJSONObject(currentCharNumber + "").getString(pluralSingularFlag);
+                        result += currentArabicNumber + " ";
                         break;
                     case 2: 
-                        if (specialTenCharactersList.contains(nextCharNumber)) {
+                        if (specialTenCharactersList.contains(nextCharNumber) && currentCharNumber == '1') {
                             currentArabicNumber = obj.getJSONObject(currentCharNumber + "" + nextCharNumber).getString(pluralSingularFlag);
                             index++;
                         } else {
                             currentArabicNumber = obj.getJSONObject(currentCharNumber + "0").getString(pluralSingularFlag);
                         }
+                        if (currentCharNumber == '1' || currentCharNumber == '2') {
+                            result += currentArabicNumber;
+                        } else {
+                            result += currentArabicNumber + " ";
+                        }
                         break;
                     case 3:
                         currentArabicNumber = obj.getJSONObject(currentCharNumber + "00").getString(pluralSingularFlag);
+                        result += currentArabicNumber + " ";
                         break;
                     case 4:
                         currentArabicNumber = obj.getJSONObject(currentCharNumber + "000").getString(pluralSingularFlag);
+                        result += currentArabicNumber + " ";
                         break;
                     default:
                         // Throw error jeje
                 }
-                result += currentArabicNumber + " ";
+                
             }
             index++;
         }
