@@ -9,15 +9,15 @@ package com.abrahamharos.practicauno;
  * @author abrahamharos
  */
 public class Converter {
-    private From from;
-    private To to;
+    final private From from;
+    final private To to;
     
     public Converter(From from, To to) {
         this.from = from;
         this.to = to;
     }
     
-    public String convert(String s) {
+    final public String convert(String s) {
         int temp = this.from.from(s);
         String output = this.to.to(temp);
         

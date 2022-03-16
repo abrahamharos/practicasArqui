@@ -8,17 +8,8 @@ package com.abrahamharos.practicauno;
  *
  * @author abrahamharos
  */
-public class FromArabicToCardinalConverter {
-    private Converter converter;
-    
+public class FromArabicToCardinalConverter extends Converter {
     public FromArabicToCardinalConverter() {
-        FromArabic fa = new FromArabic();
-        ToCardinal tc = new ToCardinal();
-        
-        this.converter = new Converter(fa, tc);
-    }
-    
-    public String convert(String s) {
-        return this.converter.convert(s);
+        super(new FromArabic(), new ToCardinal());
     }
 }
