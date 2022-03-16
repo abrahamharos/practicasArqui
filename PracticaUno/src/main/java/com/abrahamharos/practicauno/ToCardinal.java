@@ -4,106 +4,67 @@
  */
 package com.abrahamharos.practicauno;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 /**
  *
  * @author abrahamharos
  */
+enum GrammarType {
+    SINGULAR("singular"),
+    PLURAL("plural");
+
+    public final String label;
+
+    private GrammarType(String label) {
+        this.label = label;
+    }
+}
+
 public class ToCardinal implements To {
-    
+
+    JSONObject dictionary;
+
+    public ToCardinal() {
+        dictionary = FileManager.loadJson("dict.json");
+    }
+
     @Override
     public String to(int i) {
-        JSONObject obj = this.loadJSON();
-        
-        String number = String.valueOf(i);
-        
-        int index = 0;
-        String currentNumber;
-        String result = "";
-        while (index < number.length()) {
-            currentNumber = number.substring(index);
-            char currentCharNumber = currentNumber.charAt(0);
-            char nextCharNumber = ' ';
-            if (index < number.length() - 1) {
-                nextCharNumber = currentNumber.charAt(1);
-            }
-            
-            // Determine ones, tens, hundreds, thousands
-            String currentArabicNumber = "";
-            // TODO: change variable name
-            String pluralSingularFlag = "";
-            if (nextCharNumber == '0') {
-                pluralSingularFlag = "singular";
-            } else {
-                pluralSingularFlag = "plural";
-            }
-            
-            Character[] specialTenCharactersArray = new Character[]{'1', '2', '3', '4', '5'};
-            List<Character> specialTenCharactersList = new ArrayList<>(Arrays.asList(specialTenCharactersArray));
-            if (currentCharNumber != '0') {
-                switch(number.length() - index) {
-                    case 1:
-                        currentArabicNumber = obj.getJSONObject(currentCharNumber + "").getString(pluralSingularFlag);
-                        result += currentArabicNumber + " ";
-                        break;
-                    case 2: 
-                        if (specialTenCharactersList.contains(nextCharNumber) && currentCharNumber == '1') {
-                            currentArabicNumber = obj.getJSONObject(currentCharNumber + "" + nextCharNumber).getString(pluralSingularFlag);
-                            index++;
-                        } else {
-                            currentArabicNumber = obj.getJSONObject(currentCharNumber + "0").getString(pluralSingularFlag);
-                        }
-                        if (currentCharNumber == '1' || currentCharNumber == '2') {
-                            result += currentArabicNumber;
-                        } else {
-                            result += currentArabicNumber + " ";
-                        }
-                        break;
-                    case 3:
-                        currentArabicNumber = obj.getJSONObject(currentCharNumber + "00").getString(pluralSingularFlag);
-                        result += currentArabicNumber + " ";
-                        break;
-                    case 4:
-                        currentArabicNumber = obj.getJSONObject(currentCharNumber + "000").getString(pluralSingularFlag);
-                        result += currentArabicNumber + " ";
-                        break;
-                    default:
-                        // Throw error jeje
-                }
-                
-            }
-            index++;
+        // Early exit if value exists in dictionary.
+        if (dictionary.has(Integer.toString(i))) {
+            return this.get(Integer.toString(i), GrammarType.SINGULAR);
         }
-        return result;
+
+        int current, partialSum = 0, order = 0;
+        List<String> result = new ArrayList<>();
+
+        while (i > 0) {
+            current = (i % 10) * (int) Math.pow(10, order);
+            partialSum += current;
+
+            if (current != 0) {
+                result.add(this.get(Integer.toString(current), partialSum > 0 ? GrammarType.PLURAL : GrammarType.SINGULAR));
+            }
+
+            String partialSumString = Integer.toString(partialSum);
+            if (dictionary.has(partialSumString)) {
+                result = result.subList(0, Math.max(0, result.size() - partialSumString.length()));
+                result.add(this.get(partialSumString, GrammarType.SINGULAR));
+            }
+
+            i /= 10;
+            ++order;
+        }
+
+        Collections.reverse(result);
+        return String.join(" ", result);
     }
-        
-    private JSONObject loadJSON() {
-        try {
-            Path path = Path.of("dict.json");
-            
-            String sDict = Files.readString(path);
-            
-            JSONObject obj = new JSONObject(sDict);
-        
-            return obj;
-        } catch (IOException ex) {
-            Logger.getLogger(ToCardinal.class.getName()).log(Level.SEVERE, null, ex);
-            
-            System.exit(1);
-        }
-        
-        return new JSONObject();
+
+    private String get(String integer, GrammarType grammarType) {
+        return dictionary.getJSONObject(integer).getString(grammarType.label);
     }
 }
