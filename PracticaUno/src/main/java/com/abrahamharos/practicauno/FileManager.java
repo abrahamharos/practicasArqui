@@ -16,16 +16,17 @@ import org.json.JSONObject;
  * @author oscarrodriguez
  */
 public class FileManager {
-    public static JSONObject loadJson(String _path) {
-        try {
-            Path path = Path.of(_path);
-            String sDict = Files.readString(path);
-            JSONObject obj = new JSONObject(sDict);
-            return obj;
-        } catch (IOException ex) {
-            Logger.getLogger(ToCardinal.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
+    public enum File {
+        DICT_JSON("dict.json");
+        
+        public final String name;
+        
+        private File(String name) {
+            this.name = name;
         }
-        return new JSONObject();
+    }
+    
+    public static JSONObject loadJson(File file) throws IOException {
+        return JSONFileManager.load(file.name);
     }
 }

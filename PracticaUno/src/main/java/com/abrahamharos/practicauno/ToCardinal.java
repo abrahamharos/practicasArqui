@@ -8,6 +8,9 @@ import org.json.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
 
 /**
  *
@@ -25,11 +28,16 @@ enum GrammarType {
 }
 
 public class ToCardinal implements To {
-
-    JSONObject dictionary;
+    
+    private JSONObject dictionary;
 
     public ToCardinal() {
-        dictionary = FileManager.loadJson("dict.json");
+        try {
+            this.dictionary = FileManager.loadJson(FileManager.File.DICT_JSON);
+        } catch (IOException ex) {
+            Logger.getLogger(ToCardinal.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+        }
     }
 
     @Override
