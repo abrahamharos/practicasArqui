@@ -25,6 +25,8 @@ public class Main {
                 System.out.println(cardinal);
             } catch(NumberFormatException e) {
                 System.out.println("Formato de número invalido. Por favor, vuelva a intentar.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             } catch (Exception e) {
                 System.out.println("Error inesperado: " + e.toString());
                 break;

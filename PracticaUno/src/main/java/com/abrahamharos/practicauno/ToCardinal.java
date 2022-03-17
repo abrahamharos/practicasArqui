@@ -41,13 +41,13 @@ public class ToCardinal implements To {
     }
 
     @Override
-    public String to(int i) {
+    public String to(int i) throws IllegalArgumentException {
         if (i < 0) {
-            return "Error: el entero debe ser positivo";
+            throw new IllegalArgumentException("El entero debe ser positivo");
         }
         
         if (i > 9999) {
-            return "Error: el entero debe ser menor a 9999";
+            throw new IllegalArgumentException("El entero debe ser menor o igual a 9999");
         }
         
         if (i == 0) {
