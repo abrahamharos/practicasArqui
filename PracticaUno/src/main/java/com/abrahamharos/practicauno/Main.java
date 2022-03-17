@@ -4,16 +4,28 @@
  */
 package com.abrahamharos.practicauno;
 
+import java.util.Scanner;
+
 /**
  *
  * @author abrahamharos
  */
 public class Main {
     public static void main (String args[]) {
-        String number = "3300";
+        Scanner sca = new Scanner(System.in);
         FromArabicToCardinalConverter converter = new FromArabicToCardinalConverter();
         
-        String cardinal = converter.convert(number);
-        System.out.println(cardinal);
+        System.out.println("-- Ingresa valores numéricos para ver su representación textual --");
+        String number;
+        while (true) {
+            try {
+                System.out.println("Ingresa un valor [1-9999]: ");
+                number = sca.next();
+                String cardinal = converter.convert(number);
+                System.out.println(cardinal);
+            } catch(Exception e) {
+                break;
+            }
+        }
     }
 }
