@@ -15,15 +15,18 @@ public class Main {
         Scanner sca = new Scanner(System.in);
         FromArabicToCardinalConverter converter = new FromArabicToCardinalConverter();
         
-        System.out.println("-- Ingresa valores numéricos para ver su representación textual --");
+        System.out.println("-- Ingrese valores numéricos para ver su representación textual --");
         String number;
         while (true) {
             try {
-                System.out.println("Ingresa un valor [1-9999]: ");
+                System.out.println("Ingrese un valor [1-9999]: ");
                 number = sca.next();
                 String cardinal = converter.convert(number);
                 System.out.println(cardinal);
-            } catch(Exception e) {
+            } catch(NumberFormatException e) {
+                System.out.println("Formato de número invalido. Por favor, vuelva a intentar.");
+            } catch (Exception e) {
+                System.out.println("Error inesperado: " + e.toString());
                 break;
             }
         }

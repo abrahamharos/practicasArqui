@@ -10,7 +10,7 @@ package com.abrahamharos.practicauno;
  */
 public class FromArabic implements From {
     @Override
-    public int from(String s) {
+    public int from(String s) throws NumberFormatException {
         return Integer.valueOf(s);
     }
 }
