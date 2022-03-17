@@ -43,7 +43,11 @@ public class ToCardinal implements To {
     @Override
     public String to(int i) {
         if (i < 0) {
-            return "Error: integer must be positive";
+            return "Error: el entero debe ser positivo";
+        }
+        
+        if (i > 9999) {
+            return "Error: el entero debe ser menor a 9999";
         }
         
         if (i == 0) {
