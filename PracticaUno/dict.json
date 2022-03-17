@@ -59,9 +59,61 @@
     "singular": "quince",
     "plural": "quince"
   },
+  "16": {
+    "singular": "dieciseis",
+    "plural": "dieciseis",
+  },
+  "17": {
+    "singular": "diecisiete",
+    "plural": "diecisiete",
+  },
+  "18": {
+    "singular": "dieciocho",
+    "plural": "dieciocho",
+  },
+  "19": {
+    "singular": "diecinueve",
+    "plural": "diecinueve",
+  },
   "20": {
     "singular": "veinte",
     "plural": "veinti"
+  },
+  "21": {
+    "singular": "veintiuno",
+    "plural": "veintiuno"
+  },
+  "22": {
+    "singular": "veintidos",
+    "plural": "veintidos"
+  },
+  "23": {
+    "singular": "veintitres",
+    "plural": "veintitres"
+  },
+  "24": {
+    "singular": "veinticuatro",
+    "plural": "veinticuatro"
+  },
+  "25": {
+    "singular": "veinticinco",
+    "plural": "veinticinco"
+  },
+  "26": {
+    "singular": "veintiseis",
+    "plural": "veintiseis"
+  },
+  "27": {
+    "singular": "veintisiete",
+    "plural": "veintisiete"
+  },
+  "28": {
+    "singular": "veintiocho",
+    "plural": "veintiocho"
+  },
+  "29": {
+    "singular": "veintinueve",
+    "plural": "veintinueve"
   },
   "30": {
     "singular": "treinta",
